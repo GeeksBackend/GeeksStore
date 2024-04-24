@@ -1,4 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from apps.products.models import Product
 from apps.products.serializers import ProductSerializer
@@ -11,3 +12,4 @@ class ProductAPI(ListCreateAPIView):
 class ProductRetrive(RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticated, )
