@@ -1,10 +1,16 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.viewsets import GenericViewSet
+from rest_framework import mixins
 
 from apps.users.models import User
 from apps.users.serializers import UserSerializer, UserRegisterSerializer
 
 # Create your views here.
-class UserAPI(ListCreateAPIView):
+class UserAPI(GenericViewSet,
+              mixins.ListModelMixin,
+              mixins.RetrieveModelMixin,
+              mixins.CreateModelMixin,
+              mixins.UpdateModelMixin,
+              mixins.DestroyModelMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
