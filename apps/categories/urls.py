@@ -1,11 +1,8 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from apps.categories import views
+from apps.categories.views import CategoryAPI
 
-urlpatterns = [
-    path('', views.CategoryAPIView.as_view(), name="api_categorys"),
-    path('create/', views.CategoryCreateAPIView.as_view(), name='category_create_api'),
-    path('detail/<int:pk>', views.CategoryDetailAPIView.as_view(),name='category_detail_api'),
-    path('update/<int:pk>', views.CategoryUpdateAPIView.as_view(),name='category_update_api'),
-    path('delete/<int:pk>', views.CategoryDeleteAPIView.as_view(),name='category_delete_api')
-]
+router = DefaultRouter()
+router.register('categories', CategoryAPI, "api_categories")
+
+urlpatterns = router.urls

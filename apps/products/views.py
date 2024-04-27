@@ -1,4 +1,5 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import GenericViewSet
+from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from apps.products.models import Product
@@ -6,7 +7,12 @@ from apps.products.serializers import ProductSerializer, ProductCreateSerializer
 from apps.products.permissions import ProductPermission
 
 # Create your views here.
-class ProductAPI(ListCreateAPIView):
+class ProductAPI(GenericViewSet,
+                 mixins.ListModelMixin,
+                 mixins.RetrieveModelMixin,
+                 mixins.CreateModelMixin,
+                 mixins.UpdateModelMixin,
+                 mixins.DestroyModelMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -18,11 +24,6 @@ class ProductAPI(ListCreateAPIView):
             return ProductCreateSerializer
         return ProductSerializer
     
-class ProductRetrive(RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    permission_classes = (IsAuthenticated, )
-
     def get_permissions(self):
         if self.request.method in ('DELETE', 'PUT', 'PATCH'):
             return (ProductPermission(), )

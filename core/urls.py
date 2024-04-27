@@ -39,6 +39,7 @@ api_urlpatterns = [
     path('products/', include('apps.products.urls')),
     path('categories/', include('apps.categories.urls')),
     path('users/', include('apps.users.urls')),
+    path('carts/', include('apps.carts.urls')),
 
     #docs
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name="api_swagger"),

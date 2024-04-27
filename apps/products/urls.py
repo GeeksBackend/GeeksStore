@@ -1,8 +1,8 @@
-from django.urls import path 
+from rest_framework.routers import DefaultRouter
 
-from apps.products.views import ProductAPI, ProductRetrive
+from apps.products.views import ProductAPI
 
-urlpatterns = [
-    path('', ProductAPI.as_view(), name="api_products"),
-    path('<int:pk>/', ProductRetrive.as_view(), name="api_products_detail")
-]
+router = DefaultRouter()
+router.register('products', ProductAPI, "api_products")
+
+urlpatterns = router.urls
