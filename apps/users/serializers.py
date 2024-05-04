@@ -1,13 +1,15 @@
 from rest_framework import serializers
 
 from apps.users.models import User
+from apps.products.serializers import ProductSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
+    user_products = ProductSerializer(many=True, read_only=True)
     class Meta:
         model = User 
         fields = ('id', 'username', 'first_name', 
-                  'last_name', 'email', 'date_joined')
+                  'last_name', 'email', 'date_joined', 'user_products')
         
 class UserRegisterSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(max_length=255, write_only=True)
